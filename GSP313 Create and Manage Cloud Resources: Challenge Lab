@@ -1,10 +1,17 @@
 Lab Name: Create and Manage Cloud Resources: Challenge Lab (GSP313)
 
+############# Set up ###############
+
+Instance_name="nucleus-jumphost-590"
+App_port_number=8081
+Firewall_rule="accept-tcp-rule-526"
+
+####################################
 
 Task 1: Create a project jumphost instance
 Run command:
 
-gcloud compute instances create nucleus-jumphost \
+gcloud compute instances create $Instance_name \
           --network nucleus-vpc \
           --zone us-east1-b  \
           --machine-type f1-micro  \
@@ -29,7 +36,7 @@ kubectl create deployment hello-server \
 
 kubectl expose deployment hello-server \
           --type=LoadBalancer \
-          --port 8080
+          --port $App_port_number
 
 Task 3: Set up an HTTP load balancer
 Run command:
@@ -57,7 +64,7 @@ gcloud compute instance-groups managed create web-server-group \
           --region us-east1
 
 
-gcloud compute firewall-rules create web-server-firewall \
+gcloud compute firewall-rules create $Firewall_rule \
           --allow tcp:80 \
           --network nucleus-vpc
           
